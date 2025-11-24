@@ -12,7 +12,7 @@ export default class FlashcardsController {
     flashcard.merge(data)
     // Sauvegarde des modifications
     await flashcard.save()
-    // Retour le json de l'élève mis à jour
+    // Retourne le json de l'élève mis à jour
     return flashcard
   }
 }
