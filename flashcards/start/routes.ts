@@ -6,24 +6,26 @@ import router from '@adonisjs/core/services/router'
 |--------------------------------------------------------------------------
 | Routes file
 |--------------------------------------------------------------------------
-|
 | The routes file is used for defining the HTTP routes.
 |
 */
 
 router.group(() => {
   // Route principale pour afficher tous les decks
-  router.get('latest-decks', [DecksController, 'showLatestDecks'])
+  router.get('/decks', [DecksController, 'showLatestDecks']).as('decks.index')
 
   // Route pour afficher un deck unique
-  router.get('deck/:id', [DecksController, 'showOneDeck'])
+  router.get('decks/:id', [DecksController, 'showOneDeck'])
 
   // Routes pour éditer/modifier un deck
   router.get('decks/:id/edit', [DecksController, 'edit'])
   router.put('decks/:id', [DecksController, 'update'])
 
+  // Route Affichage Formulaire
+  router.get('decks/add', [DecksController, 'create'])
+
   // Route pour créer un deck
-  router.post('decks', [DecksController, 'create'])
+  router.post('decks/add', [DecksController, 'store'])
 
   // Route pour supprimer un deck
   router.delete('decks/:id', [DecksController, 'destroy'])
@@ -32,35 +34,21 @@ router.group(() => {
   router.post('decks/:id/publish', [DecksController, 'create'])
 
   // Routes pour les flashcards
-  router
-    .get('decks/:deckId/flashcards', [DecksController, 'getFlashcardsByDeck'])
-    .as('flashcards.index')
+  router.get('decks/:id/cards', [DecksController, 'getFlashcardsByDeck']).as('flashcards.index')
 
   // Routes resource users
   router.resource('users', UsersController).apiOnly()
 })
 
-//Données affichées seulement pour les utilisateurs connectés
-/*router
-  .group(() => {
-    router.post('/comments', [CommentsController, 'store'])
-    router.post('/evaluates', [EvaluatesController, 'store'])
-    router.put('/comments/:id', [CommentsController, 'update'])
-    router.put('/evaluates/:id', [EvaluatesController, 'update'])
-    router.delete('/comments/:id', [CommentsController, 'destroy'])
-    router.delete('/evaluates/:id', [EvaluatesController, 'destroy'])
-    router.post('/books', [BooksController, 'store'])
-    router.put('/books/:id', [BooksController, 'update'])
-    router.delete('/books/:id', [BooksController, 'destroy'])
-  })
-  .use(middleware.auth())
+router.group(() => {
+  //Affichage des decks publiés
 
-//Utilisateur
-router
-  .group(() => {
-    router.post('register', [AuthController, 'register'])
-    router.post('login', [AuthController, 'login'])
-    router.post('logout', [AuthController, 'logout']).use(middleware.auth())
-  })
-  .prefix('user')
-*/
+  router.get('deck/details', [FlashcardController, 'index']) // Liste des flashcards
+
+  router.post('flashcard/add', [FlashcardController, 'store']) // Créer une flashcard
+  //router.get('/flashcards/latest', [FlashcardController, 'showLatestFlashcards']) // Voir 10 dernières flashcards
+  // Route pour éditer/modifier une flashcard
+  router.put('flashcard/:id/edit', [FlashcardController, 'update']) // Mettre à jour
+
+  router.delete('/:id', [FlashcardController, 'destroy']) // Supprimer
+})

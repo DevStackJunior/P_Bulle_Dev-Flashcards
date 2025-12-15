@@ -184,27 +184,27 @@
                   {{ deck.id }}
                 </td>
                 <td>
-                  {{ deck.title }}
+                  {{ deck.publishedDate.toFormat('dd LLL yyyy') }}
                 </td>
                 <td>
                   <div class="actions-container">
-                    <a href="{{ route('decks.edit', { id: deck.id }) }}" class="btn-action">
+                    <a href="" class="btn-action">
                       Modifier
                     </a>
 
-                    <a href="{{ route('flashcards.index', { deckId: deck.id }) }}" class="btn-action">
+                    <a href="" class="btn-action">
                       Voir la liste des FlashCards
                     </a>
 
-                    <a href="{{ route('flashcards.create', { deckId: deck.id }) }}" class="btn-action">
+                    <a href="" class="btn-action">
                       Créer une nouvelle FlashCard
                     </a>
 
-                    <a href="{{ route('decks.show', { id: deck.id }) }}" class="btn-action">
+                    <a href="" class="btn-action">
                       Jouer
                     </a>
 
-                    <a href="{{ route('decks.publish', { id: deck.id }) }}" class="btn-action">
+                    <a href="" class="btn-action">
                       Publier
                     </a>
                   </div>
